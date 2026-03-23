@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-playfair: 'Playfair Display', Georgia, serif;
+  --font-dm-sans:  'DM Sans', system-ui, sans-serif;
+
+  /* Brand tokens */
+  --brand-gold:      #c8860a;
+  --brand-espresso:  #1a0d08;
+  --brand-cream:     #fdf8f0;
+  --brand-coffee:    #7d5130;
+  --brand-light:     #f9eedb;
+
+  --nav-height: 80px;
+}
+
+@layer base {
+  * { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    font-family: var(--font-dm-sans);
+    background: var(--brand-cream);
+    color: var(--brand-espresso);
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-playfair);
+    line-height: 1.15;
+  }
+}
+
+@layer components {
+  /* ── Buttons ──────────────────────────────── */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-white text-sm tracking-wide
+           bg-espresso-500 hover:bg-espresso-600 transition-all duration-200 shadow-lg hover:shadow-xl
+           active:scale-95;
+    font-family: var(--font-dm-sans);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-espresso-900 text-sm tracking-wide
+           border-2 border-espresso-500 hover:bg-espresso-50 transition-all duration-200
+           active:scale-95;
+    font-family: var(--font-dm-sans);
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium text-espresso-500 text-sm
+           hover:bg-espresso-50 transition-all duration-200;
+  }
+
+  /* ── Section layouts ──────────────────────── */
+  .section-padding {
+    @apply py-20 md:py-32;
+  }
+
+  .container-main {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* ── Section headings ─────────────────────── */
+  .section-label {
+    @apply inline-block text-xs font-semibold tracking-[0.2em] uppercase text-espresso-500 mb-3;
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl font-bold text-coffee-950 leading-tight;
+    font-family: var(--font-playfair);
+  }
+
+  .section-title span {
+    @apply text-espresso-500 italic;
+  }
+
+  /* ── Cards ────────────────────────────────── */
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+  }
+
+  /* ── Grain texture overlay ────────────────── */
+  .grain-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.04;
+  }
+
+  /* ── Announcement bar ─────────────────────── */
+  .announcement-bar {
+    @apply w-full py-2.5 px-4 text-center text-sm font-medium;
+    background: var(--brand-gold);
+    color: white;
+  }
+
+  /* ── Nav ──────────────────────────────────── */
+  .nav-link {
+    @apply relative text-sm font-medium text-coffee-800 hover:text-espresso-600 transition-colors duration-200;
+  }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-espresso-500 transition-all duration-300;
+  }
+
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+
+  /* ── Admin sidebar ────────────────────────── */
+  .admin-sidebar-link {
+    @apply flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-coffee-700
+           hover:bg-espresso-50 hover:text-espresso-700 transition-all duration-150;
+  }
+
+  .admin-sidebar-link.active {
+    @apply bg-espresso-100 text-espresso-800 font-semibold;
+  }
+
+  /* ── Form inputs ──────────────────────────── */
+  .form-input {
+    @apply w-full px-4 py-3 rounded-xl border border-coffee-200 bg-white text-coffee-900
+           placeholder:text-coffee-400 focus:outline-none focus:ring-2 focus:ring-espresso-400
+           focus:border-transparent transition-all duration-200 text-sm;
+    font-family: var(--font-dm-sans);
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-coffee-800 mb-1.5;
+  }
+
+  .form-error {
+    @apply text-red-500 text-xs mt-1;
+  }
+
+  /* ── Skeleton loader ──────────────────────── */
+  .skeleton {
+    @apply bg-gradient-to-r from-coffee-100 via-cream-200 to-coffee-100 animate-shimmer;
+    background-size: 200% 100%;
+  }
+
+  /* ── Coffee bean divider ──────────────────── */
+  .divider-bean {
+    @apply flex items-center gap-4 my-12;
+  }
+
+  .divider-bean::before,
+  .divider-bean::after {
+    content: '';
+    @apply flex-1 h-px bg-coffee-200;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--brand-cream); }
+::-webkit-scrollbar-thumb { background: var(--brand-coffee); border-radius: 9999px; }
+
+/* Selection */
+::selection { background: var(--brand-gold); color: white; }

@@ -1,0 +1,18 @@
+/.enc
+/node_modules
+/dist      
+/.vscode
+/.idea  
+/.DS_Store
+/.env   
+/coverage
+/logs
+/tsconfig.tsbuildinfo
+/.eslintcache
+/.prettiercache
+/.next  
+/.nuxt
+/.vercel    
+
+# Optional npm cache directory
+.npm                
