@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { requireAdminSession } from '@/lib/auth'
 
+export async function GET(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  return NextResponse.json({ error: 'Not found' }, { status: 404 })
+}
+
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     await requireAdminSession()
