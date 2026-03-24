@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Plus, Trash2, Eye, EyeOff } from 'lucide-react'
+import ImageUploadField from '@/components/admin/ImageUploadField'
 
 type GalleryImage = {
   id: string; title?: string | null; altText?: string | null;
@@ -129,19 +130,26 @@ export default function GalleryPage() {
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
             <div className="p-6 border-b"><h2 className="font-bold text-gray-900">Add Gallery Image</h2></div>
             <div className="p-6 space-y-4">
-              <div>
-                <label className="form-label text-xs">Desktop Image URL * <span className="text-gray-400">(1200×800px)</span></label>
-                <input value={form.desktopUrl} onChange={F('desktopUrl')} className="form-input" placeholder="https://..." />
-                {form.desktopUrl && <img src={form.desktopUrl} className="mt-2 h-24 w-full object-cover rounded-lg" alt="" />}
-              </div>
-              <div>
-                <label className="form-label text-xs">Mobile Image URL * <span className="text-gray-400">(600×400 or portrait 400×600px)</span></label>
-                <input value={form.mobileUrl} onChange={F('mobileUrl')} className="form-input" placeholder="https://..." />
-              </div>
-              <div>
-                <label className="form-label text-xs">Thumbnail URL <span className="text-gray-400">(400×300px, optional)</span></label>
-                <input value={form.thumbUrl} onChange={F('thumbUrl')} className="form-input" placeholder="https://..." />
-              </div>
+              <ImageUploadField
+                label="Desktop Image URL"
+                value={form.desktopUrl}
+                required
+                onChange={(url) => setForm(f => ({ ...f, desktopUrl: url }))}
+                placeholder="https://..."
+              />
+              <ImageUploadField
+                label="Mobile Image URL"
+                value={form.mobileUrl}
+                required
+                onChange={(url) => setForm(f => ({ ...f, mobileUrl: url }))}
+                placeholder="https://..."
+              />
+              <ImageUploadField
+                label="Thumbnail URL"
+                value={form.thumbUrl}
+                onChange={(url) => setForm(f => ({ ...f, thumbUrl: url }))}
+                placeholder="https://..."
+              />
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="form-label">Title</label>

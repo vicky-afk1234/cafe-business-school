@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Save, Eye } from 'lucide-react'
+import ImageUploadField from '@/components/admin/ImageUploadField'
 
 const PAGES = ['home', 'about', 'courses', 'admissions', 'contact', 'gallery']
 
@@ -144,20 +145,20 @@ export default function HeroPage() {
         {/* Images */}
         <div className="pt-4 border-t border-gray-100 space-y-4">
           <h3 className="font-semibold text-gray-800">Background Images</h3>
-          <div>
-            <label className="form-label">Desktop Image URL <span className="text-gray-400 font-normal">(1920×1080 or wider, landscape focus)</span></label>
-            <input value={form.desktopImageUrl || ''} onChange={F('desktopImageUrl')} className="form-input" placeholder="https://images.unsplash.com/..." />
-            {form.desktopImageUrl && (
-              <img src={form.desktopImageUrl} className="mt-2 h-28 w-full object-cover rounded-xl" alt="Desktop preview" />
-            )}
-          </div>
-          <div>
-            <label className="form-label">Mobile Image URL <span className="text-gray-400 font-normal">(768×1024 or taller, portrait crop — can be a different composition)</span></label>
-            <input value={form.mobileImageUrl || ''} onChange={F('mobileImageUrl')} className="form-input" placeholder="https://images.unsplash.com/..." />
-            {form.mobileImageUrl && (
-              <img src={form.mobileImageUrl} className="mt-2 h-28 w-48 object-cover rounded-xl" alt="Mobile preview" />
-            )}
-          </div>
+          <ImageUploadField
+            label="Desktop Image URL"
+            value={form.desktopImageUrl || ''}
+            onChange={(url) => setForm(f => ({ ...f, desktopImageUrl: url }))}
+            placeholder="https://images.unsplash.com/..."
+            required
+          />
+          <ImageUploadField
+            label="Mobile Image URL"
+            value={form.mobileImageUrl || ''}
+            onChange={(url) => setForm(f => ({ ...f, mobileImageUrl: url }))}
+            placeholder="https://images.unsplash.com/..."
+          />
+        </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="form-label">Overlay Color</label>

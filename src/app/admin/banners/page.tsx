@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Plus, Pencil, Trash2, Eye, EyeOff, Image } from 'lucide-react'
+import ImageUploadField from '@/components/admin/ImageUploadField'
 
 type Banner = {
   id: string; title: string; placement: string; isActive: boolean;
@@ -193,16 +194,19 @@ export default function BannersPage() {
                 <div className="text-sm font-semibold text-blue-800 flex items-center gap-2">
                   <Image size={14} /> Image URLs (Desktop & Mobile separately)
                 </div>
-                <div>
-                  <label className="form-label text-xs">Desktop Image URL <span className="text-gray-400">(1440×400px recommended)</span></label>
-                  <input value={form.desktopImageUrl} onChange={e => setForm({...form, desktopImageUrl: e.target.value})} className="form-input" placeholder="https://..." />
-                  {form.desktopImageUrl && <img src={form.desktopImageUrl} className="mt-2 h-20 w-full object-cover rounded-lg" alt="preview" />}
-                </div>
-                <div>
-                  <label className="form-label text-xs">Mobile Image URL <span className="text-gray-400">(768×300px recommended)</span></label>
-                  <input value={form.mobileImageUrl} onChange={e => setForm({...form, mobileImageUrl: e.target.value})} className="form-input" placeholder="https://..." />
-                  {form.mobileImageUrl && <img src={form.mobileImageUrl} className="mt-2 h-16 w-48 object-cover rounded-lg" alt="mobile preview" />}
-                </div>
+                <ImageUploadField
+                  label="Desktop Image URL"
+                  value={form.desktopImageUrl}
+                  required
+                  onChange={(url) => setForm(f => ({ ...f, desktopImageUrl: url }))}
+                  placeholder="https://..."
+                />
+                <ImageUploadField
+                  label="Mobile Image URL"
+                  value={form.mobileImageUrl}
+                  onChange={(url) => setForm(f => ({ ...f, mobileImageUrl: url }))}
+                  placeholder="https://..."
+                />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
