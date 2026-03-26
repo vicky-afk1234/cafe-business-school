@@ -6,6 +6,7 @@ const nextConfig = {
       { protocol: 'https', hostname: 'res.cloudinary.com' },
       { protocol: 'https', hostname: 'cdn.gcbs.edu.sg' },
       { protocol: 'https', hostname: 'via.placeholder.com' },
+      { protocol: 'https', hostname: '**.public.blob.vercel-storage.com' },
     ],
     formats: ['image/avif', 'image/webp'],
   },

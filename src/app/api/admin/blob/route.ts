@@ -1,5 +1,16 @@
 import { NextResponse } from 'next/server'
+import { put } from '@vercel/blob'
+import { randomUUID } from 'crypto'
 import { requireAdminSession } from '@/lib/auth'
+
+function sanitizeFileName(name: string) {
+  return name
+    .normalize('NFKD')
+    .replace(/[^a-zA-Z0-9._-]/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+    .toLowerCase()
+}
 
 export async function POST(req: Request) {
   try {
@@ -22,6 +33,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'No file provided' }, { status: 400 })
   }
 
+  if (!file.type.startsWith('image/')) {
+    return NextResponse.json({ error: 'Only image uploads are allowed' }, { status: 400 })
+  }
+
   const buffer = Buffer.from(await file.arrayBuffer())
 
   // Validate file size before uploading
@@ -34,73 +49,38 @@ export async function POST(req: Request) {
   }
 
   try {
-    // Create FormData for Vercel Blob
-    const blobFormData = new FormData()
-    const blobFile = new File([buffer], file.name, { type: file.type })
-    blobFormData.append('file', blobFile)
+    const originalName = file.name || 'upload'
+    const safeName = sanitizeFileName(originalName) || `upload-${Date.now()}`
+    const pathname = `admin-uploads/${Date.now()}-${randomUUID()}-${safeName}`
 
-    // Upload to Vercel Blob using the correct API
-    const uploadRes = await fetch('https://blob.vercel-storage.com/upload', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: blobFormData,
+    const blob = await put(pathname, buffer, {
+      access: 'public',
+      contentType: file.type,
+      addRandomSuffix: false,
     })
 
-    if (!uploadRes.ok) {
-      const responseText = await uploadRes.text()
-      console.error('Vercel blob error (status: ' + uploadRes.status + '):', responseText)
-
-      // Handle specific errors
-      if (responseText.includes('Body exceeds') || responseText.includes('exceeds max')) {
-        return NextResponse.json(
-          { error: 'File is too large. Please optimize and try again.' },
-          { status: 413 }
-        )
-      }
-
-      if (uploadRes.status === 405) {
-        return NextResponse.json(
-          {
-            error: 'Blob storage misconfigured',
-            details: 'Invalid BLOB_READ_WRITE_TOKEN or wrong endpoint. Check your Vercel project settings.',
-          },
-          { status: 500 }
-        )
-      }
-
-      return NextResponse.json(
-        { error: 'Blob upload failed', details: responseText },
-        { status: Math.min(uploadRes.status, 500) }
-      )
-    }
-
-    let result
-    try {
-      result = await uploadRes.json()
-    } catch {
-      const responseText = await uploadRes.text()
-      console.error('Failed to parse blob response as JSON:', responseText)
-      return NextResponse.json(
-        { error: 'Invalid response from blob storage', details: responseText },
-        { status: 502 }
-      )
-    }
-    
-    // Extract URL from response (Vercel Blob returns it in different ways)
-    const url = result.url || result.blob?.url || result
-    
     return NextResponse.json({
-      url,
+      url: blob.url,
       size: buffer.length,
       type: file.type,
       name: file.name,
     })
   } catch (error: any) {
     console.error('Blob upload error:', error)
+
+    const message = String(error?.message || '')
+    if (message.includes('BLOB_READ_WRITE_TOKEN')) {
+      return NextResponse.json(
+        {
+          error: 'Blob storage misconfigured',
+          details: 'Invalid BLOB_READ_WRITE_TOKEN. Check your Vercel project settings.',
+        },
+        { status: 500 }
+      )
+    }
+
     return NextResponse.json(
-      { error: error?.message || 'Upload failed', details: error?.stack },
+      { error: error?.message || 'Upload failed' },
       { status: 500 }
     )
   }
