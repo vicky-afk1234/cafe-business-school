@@ -26,26 +26,61 @@ type Course = {
   slug: string
 }
 
+type SiteSettings = {
+  contact_phone?: string
+  contact_email?: string
+  contact_address?: string
+  contact_hours?: string
+}
+
 export default function CtaSection() {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [courses, setCourses] = useState<Course[]>([])
+  const [settings, setSettings] = useState<SiteSettings>({})
 
   useEffect(() => {
-    const fetchCourses = async () => {
+    const fetchData = async () => {
       try {
-        const res = await fetch('/api/admin/courses')
-        const data = await res.json()
-        if (Array.isArray(data)) {
-          setCourses(data.filter(c => c.isActive))
+        const [coursesRes, settingsRes] = await Promise.all([
+          fetch('/api/public/courses'),
+          fetch('/api/public/settings'),
+        ])
+
+        const coursesData = await coursesRes.json()
+        if (Array.isArray(coursesData)) {
+          setCourses(coursesData)
+        }
+
+        const settingsData = await settingsRes.json()
+        if (settingsData && typeof settingsData === 'object' && !Array.isArray(settingsData)) {
+          setSettings(settingsData)
         }
       } catch (error) {
-        console.error('Failed to fetch courses:', error)
+        console.error('Failed to fetch CTA data:', error)
       }
     }
-    fetchCourses()
+    fetchData()
   }, [])
+
+  const contactCards = [
+    {
+      icon: '📞',
+      text: settings.contact_phone || '+65 0000 0000',
+      sub: settings.contact_hours || 'Mon-Fri, 9am-6pm',
+    },
+    {
+      icon: '📧',
+      text: settings.contact_email || 'enquiry@gcbs.edu.sg',
+      sub: 'We reply within 24 hours',
+    },
+    {
+      icon: '📍',
+      text: settings.contact_address || '123 Orchard Road, Singapore 238858',
+      sub: 'Visit us for a campus tour',
+    },
+  ]
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -86,11 +121,7 @@ export default function CtaSection() {
             </p>
 
             <div className="space-y-4">
-              {[
-                { icon: '📞', text: '+65 0000 0000', sub: 'Mon–Fri, 9am–6pm' },
-                { icon: '📧', text: 'enquiry@gcbs.edu.sg', sub: 'We reply within 24 hours' },
-                { icon: '📍', text: '123 Orchard Road, Singapore', sub: '#10-01, 238858' },
-              ].map((c) => (
+              {contactCards.map((c) => (
                 <div key={c.text} className="flex items-start gap-3 p-4 bg-white rounded-xl border border-coffee-100">
                   <span className="text-xl">{c.icon}</span>
                   <div>

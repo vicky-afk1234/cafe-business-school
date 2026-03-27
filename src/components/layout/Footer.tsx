@@ -1,7 +1,38 @@
 import Link from 'next/link'
 import { Mail, Phone, MapPin, Facebook, Instagram, Youtube, Linkedin } from 'lucide-react'
+import { prisma } from '@/lib/prisma'
 
-export default function Footer() {
+export default async function Footer() {
+  const settingKeys = [
+    'contact_phone',
+    'contact_email',
+    'contact_address',
+    'contact_hours',
+    'social_facebook',
+    'social_instagram',
+    'social_youtube',
+    'social_linkedin',
+    'school_edutrust_no',
+    'school_reg_no',
+  ]
+
+  const settingsRows = await prisma.siteSetting.findMany({
+    where: { key: { in: settingKeys } },
+  })
+
+  const settings = settingsRows.reduce<Record<string, string>>((acc, row) => {
+    acc[row.key] = row.value
+    return acc
+  }, {})
+
+  const phoneText = settings.contact_phone || '+65 0000 0000'
+  const phoneHref = `tel:${phoneText.replace(/[^\d+]/g, '')}`
+  const emailText = settings.contact_email || 'enquiry@gcbs.edu.sg'
+  const addressText = settings.contact_address || '123 Orchard Road, Singapore 238858'
+  const hoursText = settings.contact_hours || 'Mon-Fri 9am-6pm'
+  const regNo = settings.school_reg_no || '202000001X'
+  const eduTrustNo = settings.school_edutrust_no || 'EduTrust Certified'
+
   return (
     <footer className="bg-coffee-950 text-coffee-200">
       {/* Top wave */}
@@ -33,10 +64,10 @@ export default function Footer() {
             </p>
             <div className="flex gap-4">
               {[
-                { icon: Facebook, href: '#', label: 'Facebook' },
-                { icon: Instagram, href: '#', label: 'Instagram' },
-                { icon: Youtube, href: '#', label: 'YouTube' },
-                { icon: Linkedin, href: '#', label: 'LinkedIn' },
+                { icon: Facebook, href: settings.social_facebook || '#', label: 'Facebook' },
+                { icon: Instagram, href: settings.social_instagram || '#', label: 'Instagram' },
+                { icon: Youtube, href: settings.social_youtube || '#', label: 'YouTube' },
+                { icon: Linkedin, href: settings.social_linkedin || '#', label: 'LinkedIn' },
               ].map(({ icon: Icon, href, label }) => (
                 <Link
                   key={label}
@@ -97,26 +128,28 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-sm text-coffee-400">
                 <MapPin size={16} className="text-espresso-400 mt-0.5 shrink-0" />
-                123 Orchard Road, #10-01 Singapore 238858
+                {addressText}
               </li>
               <li>
-                <Link href="tel:+6500000000" className="flex items-center gap-3 text-sm text-coffee-400 hover:text-espresso-400 transition-colors">
+                <Link href={phoneHref} className="flex items-center gap-3 text-sm text-coffee-400 hover:text-espresso-400 transition-colors">
                   <Phone size={16} className="text-espresso-400 shrink-0" />
-                  +65 0000 0000
+                  {phoneText}
                 </Link>
               </li>
               <li>
-                <Link href="mailto:enquiry@gcbs.edu.sg" className="flex items-center gap-3 text-sm text-coffee-400 hover:text-espresso-400 transition-colors">
+                <Link href={`mailto:${emailText}`} className="flex items-center gap-3 text-sm text-coffee-400 hover:text-espresso-400 transition-colors">
                   <Mail size={16} className="text-espresso-400 shrink-0" />
-                  enquiry@gcbs.edu.sg
+                  {emailText}
                 </Link>
               </li>
             </ul>
 
+            <p className="text-xs text-coffee-500 mt-3">{hoursText}</p>
+
             <div className="mt-8 p-4 rounded-xl bg-coffee-900 border border-coffee-800">
               <div className="text-xs text-coffee-500 uppercase tracking-widest mb-1">Accreditation</div>
-              <div className="text-sm text-coffee-300 font-medium">EduTrust Certified</div>
-              <div className="text-xs text-coffee-500 mt-0.5">PEI Reg. No.: 202000001X</div>
+              <div className="text-sm text-coffee-300 font-medium">{eduTrustNo}</div>
+              <div className="text-xs text-coffee-500 mt-0.5">PEI Reg. No.: {regNo}</div>
             </div>
           </div>
         </div>

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Menu, X, ChevronDown, Phone, Mail } from 'lucide-react'
+import { Menu, X, ChevronDown, Phone } from 'lucide-react'
 import logo from '../../logo.jpeg'
 
 type Course = {
@@ -12,33 +12,42 @@ type Course = {
   slug: string
 }
 
-const staticLinks = [
-  { label: 'About', href: '/about' },
-  { label: 'Contact', href: '/contact' },
-]
+type SiteSettings = {
+  contact_phone?: string
+}
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [courses, setCourses] = useState<Course[]>([])
-  const [loadingCourses, setLoadingCourses] = useState(true)
+  const [settings, setSettings] = useState<SiteSettings>({})
 
   useEffect(() => {
-    const fetchCourses = async () => {
+    const fetchData = async () => {
       try {
-        const res = await fetch('/api/admin/courses')
-        const data = await res.json()
-        if (Array.isArray(data)) {
-          setCourses(data.filter(c => c.isActive).map(c => ({ id: c.id, title: c.title, slug: c.slug })))
+        const [coursesRes, settingsRes] = await Promise.all([
+          fetch('/api/public/courses'),
+          fetch('/api/public/settings'),
+        ])
+
+        const coursesData = await coursesRes.json()
+        if (Array.isArray(coursesData)) {
+          setCourses(coursesData.map(c => ({ id: c.id, title: c.title, slug: c.slug })))
+        }
+
+        const settingsData = await settingsRes.json()
+        if (settingsData && typeof settingsData === 'object' && !Array.isArray(settingsData)) {
+          setSettings(settingsData)
         }
       } catch (error) {
-        console.error('Failed to fetch courses:', error)
-      } finally {
-        setLoadingCourses(false)
+        console.error('Failed to fetch navbar data:', error)
       }
     }
-    fetchCourses()
+    fetchData()
   }, [])
+
+  const phoneText = settings.contact_phone || '+65 0000 0000'
+  const phoneHref = `tel:${phoneText.replace(/[^\d+]/g, '')}`
 
   const navLinks = [
     { label: 'About', href: '/about' },
@@ -129,9 +138,9 @@ export default function Navbar() {
 
           {/* CTA */}
           <div className="hidden lg:flex items-center gap-3">
-            <Link href="tel:+6500000000" className="flex items-center gap-1.5 text-sm text-coffee-700 hover:text-espresso-600 transition-colors">
+            <Link href={phoneHref} className="flex items-center gap-1.5 text-sm text-coffee-700 hover:text-espresso-600 transition-colors">
               <Phone size={14} />
-              +65 0000 0000
+              {phoneText}
             </Link>
             <Link href="/contact" className="btn-primary text-sm py-3 px-6">
               Apply Now
@@ -186,9 +195,9 @@ export default function Navbar() {
               </div>
             ))}
             <div className="pt-4 border-t border-coffee-100 space-y-3">
-              <Link href="tel:+6500000000" className="flex items-center gap-2 py-3 px-4 text-coffee-700 text-sm">
+              <Link href={phoneHref} className="flex items-center gap-2 py-3 px-4 text-coffee-700 text-sm">
                 <Phone size={14} />
-                +65 0000 0000
+                {phoneText}
               </Link>
               <Link
                 href="/contact"
