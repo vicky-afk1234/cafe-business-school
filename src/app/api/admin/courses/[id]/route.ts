@@ -19,24 +19,39 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   try {
     await requireAdminSession()
     const { id } = await params
-    const data = await req.json()
+    const raw = await req.json()
+
+    const {
+      categoryId,
+      category: _category,
+      id: _id,
+      createdAt: _createdAt,
+      updatedAt: _updatedAt,
+      ...data
+    } = raw
 
     // Validate categoryId if it's being updated
-    if (data.categoryId) {
+    if (categoryId !== undefined) {
+      if (!categoryId || typeof categoryId !== 'string') {
+        return NextResponse.json({ error: 'categoryId is required' }, { status: 400 })
+      }
+
       const categoryExists = await prisma.courseCategory.findUnique({
-        where: { id: data.categoryId },
+        where: { id: categoryId },
       })
       if (!categoryExists) {
         const categories = await prisma.courseCategory.findMany()
         return NextResponse.json(
           {
             error: 'Invalid categoryId',
-            message: `Category with ID "${data.categoryId}" does not exist`,
+            message: `Category with ID "${categoryId}" does not exist`,
             availableCategories: categories,
           },
           { status: 400 }
         )
       }
+
+      data.category = { connect: { id: categoryId } }
     }
 
     const course = await prisma.course.update({
