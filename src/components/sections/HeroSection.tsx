@@ -50,19 +50,10 @@ export default function HeroSection({ data }: { data: HeroData }) {
             sizes="768px"
           />
         )}
-        {/* Overlay */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `linear-gradient(135deg, ${(h.overlayColor || '#0f0d2f')}f0 0%, ${(h.overlayColor || '#0f0d2f')}a0 60%, ${(h.overlayColor || '#0f0d2f')}50 100%)`,
-          }}
-        />
-        {/* Bottom gradient */}
-        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-coffee-950 to-transparent" />
       </div>
 
       {/* Decorative coffee bean accent */}
-      <div className="absolute top-1/4 right-8 md:right-16 lg:right-32 z-10 opacity-10 hidden md:block">
+      <div className="absolute top-1/4 right-8 md:right-16 lg:right-32 z-10 hidden md:block">
         <Coffee size={280} className="text-espresso-300 rotate-12" />
       </div>
 
@@ -72,15 +63,15 @@ export default function HeroSection({ data }: { data: HeroData }) {
           <div className="max-w-6xl">
             {/* Badge */}
             {h.badge && (
-              <div className="inline-flex items-center gap-2 bg-espresso-500/20 border border-espresso-400/40 text-espresso-300 text-xs font-semibold tracking-[0.2em] uppercase px-4 py-2 rounded-full mb-8 backdrop-blur-sm animate-fade-up">
+              <div className="inline-flex items-center gap-2 bg-espresso-600 border border-espresso-600 text-white text-xs font-semibold tracking-[0.2em] uppercase px-4 py-2 rounded-full mb-8">
                 {h.badge}
               </div>
             )}
 
             {/* Headline */}
             <h1
-              className="text-5xl sm:text-6xl md:text-7xl font-bold text-white leading-[1.05] mb-4 animate-fade-up"
-              style={{ fontFamily: 'var(--font-playfair)', animationDelay: '0.1s', opacity: 0 }}
+              className="text-5xl sm:text-6xl md:text-7xl font-bold text-white leading-[1.05] mb-4"
+              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               {h.headline}
               {h.headlineAccent && (
@@ -92,19 +83,18 @@ export default function HeroSection({ data }: { data: HeroData }) {
             </h1>
 
             {h.subheadline && (
-              <div
-                className="text-2xl md:text-3xl text-cream-200 font-light mb-8 animate-fade-up"
-                style={{ fontFamily: 'var(--font-playfair)', animationDelay: '0.2s', opacity: 0 }}
-              >
-                {h.subheadline}
-              </div>
+                <div
+                  className="text-2xl md:text-3xl text-cream-200 font-light mb-8"
+                  style={{ fontFamily: 'var(--font-playfair)' }}
+                >
+                  {h.subheadline}
+                </div>
             )}
 
             {/* Body */}
             {h.bodyText && (
               <p
-                className="text-base md:text-lg text-coffee-200 leading-relaxed max-w-xl mb-10 animate-fade-up"
-                style={{ animationDelay: '0.3s', opacity: 0 }}
+                className="text-base md:text-lg text-coffee-200 leading-relaxed max-w-xl mb-10"
               >
                 {h.bodyText}
               </p>
@@ -112,8 +102,7 @@ export default function HeroSection({ data }: { data: HeroData }) {
 
             {/* CTAs */}
             <div
-              className="flex flex-col sm:flex-row gap-4 animate-fade-up"
-              style={{ animationDelay: '0.4s', opacity: 0 }}
+              className="flex flex-col sm:flex-row gap-4"
             >
               {h.ctaPrimary && h.ctaPrimaryUrl && (
                 <Link href={h.ctaPrimaryUrl} className="btn-primary text-base px-10 py-4">
@@ -123,7 +112,7 @@ export default function HeroSection({ data }: { data: HeroData }) {
               {h.ctaSecondary && h.ctaSecondaryUrl && (
                 <Link
                   href={h.ctaSecondaryUrl}
-                  className="inline-flex items-center gap-2 px-10 py-4 rounded-full font-semibold text-white text-base border-2 border-white/30 hover:border-white/60 hover:bg-white/10 transition-all duration-200 backdrop-blur-sm"
+                  className="inline-flex items-center gap-2 px-10 py-4 rounded-full font-semibold text-white text-base border-2 border-espresso-400 bg-espresso-600 hover:bg-espresso-700 transition-all duration-200"
                 >
                   {h.ctaSecondary}
                 </Link>
@@ -136,7 +125,7 @@ export default function HeroSection({ data }: { data: HeroData }) {
       {/* Scroll indicator */}
       <a
         href="#stats"
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 text-white/50 hover:text-white transition-colors animate-float hidden md:flex flex-col items-center gap-1"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 text-white hover:text-cream-100 transition-colors hidden md:flex flex-col items-center gap-1"
       >
         <span className="text-xs tracking-widest uppercase">Scroll</span>
         <ChevronDown size={16} />

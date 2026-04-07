@@ -107,7 +107,7 @@ export default function CtaSection() {
   }
 
   return (
-    <section id="apply" className="section-padding bg-white">
+    <section id="apply" className="section-padding bg-espresso-900">
       <div className="container-main">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Left */}
@@ -123,11 +123,11 @@ export default function CtaSection() {
 
             <div className="space-y-4">
               {contactCards.map((c) => (
-                <div key={c.text} className="flex items-start gap-3 p-4 bg-white rounded-xl border border-coffee-100">
+                <div key={c.text} className="flex items-start gap-3 p-4 bg-espresso-800 rounded-xl border border-espresso-600">
                   <span className="text-xl">{c.icon}</span>
                   <div>
-                    <div className="font-semibold text-coffee-900 text-sm">{c.text}</div>
-                    <div className="text-xs text-coffee-500">{c.sub}</div>
+                    <div className="font-semibold text-white text-sm">{c.text}</div>
+                    <div className="text-xs text-coffee-200">{c.sub}</div>
                   </div>
                 </div>
               ))}
@@ -135,7 +135,7 @@ export default function CtaSection() {
           </div>
 
           {/* Right — form */}
-          <div className="bg-white rounded-3xl shadow-xl border border-coffee-100 p-8 md:p-10">
+          <div className="bg-espresso-800 rounded-3xl shadow-xl border border-espresso-600 p-8 md:p-10">
             {submitted ? (
               <div className="text-center py-12">
                 <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-5">

@@ -28,8 +28,6 @@ export default async function AboutPage() {
   const heroSubheadline = hero?.subheadline
   const ctaLabel = hero?.ctaPrimary || 'Apply Now'
   const ctaHref = hero?.ctaPrimaryUrl || '/#apply'
-  const overlayColor = hero?.overlayColor || '#0f0d2f'
-  const overlayOpacity = Math.min(Math.max(hero?.overlayOpacity ?? 0.72, 0), 1)
 
   // About section defaults
   const missionBadge = about?.missionBadge || 'Our Mission'
@@ -60,19 +58,17 @@ export default async function AboutPage() {
       <section className="relative bg-coffee-950 pt-40 pb-24 overflow-hidden">
         <div className="absolute inset-0">
           {hero?.mobileImageUrl && (
-            <Image src={hero.mobileImageUrl} alt="" fill className="object-cover sm:hidden opacity-20" sizes="768px" />
+            <Image src={hero.mobileImageUrl} alt="" fill className="object-cover sm:hidden" sizes="768px" />
           )}
           {hero?.desktopImageUrl && (
             <Image
               src={hero.desktopImageUrl}
               alt=""
               fill
-              className={`object-cover ${hero?.mobileImageUrl ? 'hidden sm:block' : ''} opacity-20`}
+              className={`object-cover ${hero?.mobileImageUrl ? 'hidden sm:block' : ''}`}
               sizes="100vw"
             />
           )}
-          <div className="absolute inset-0" style={{ backgroundColor: overlayColor, opacity: overlayOpacity }} />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-coffee-950/70" />
         </div>
         <div className="container-main relative z-10 text-center">
           <span className="section-label text-espresso-300">{heroBadge}</span>
@@ -87,7 +83,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Story */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-espresso-900">
         <div className="container-main">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -127,7 +123,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="section-padding bg-cream-100">
+      <section className="section-padding bg-espresso-800">
         <div className="container-main">
           <div className="text-center mb-16">
             <span className="section-label">What We Stand For</span>
@@ -135,7 +131,7 @@ export default async function AboutPage() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map(v => (
-              <div key={v.title} className="bg-white p-6 rounded-2xl border border-coffee-100 shadow-sm hover:shadow-lg transition-shadow">
+              <div key={v.title} className="bg-espresso-700 p-6 rounded-2xl border border-espresso-500 shadow-sm hover:shadow-lg transition-shadow">
                 <div className="text-4xl mb-4">{v.icon}</div>
                 <h3 className="font-bold text-coffee-950 mb-2">{v.title}</h3>
                 <p className="text-sm text-coffee-600 leading-relaxed">{v.description}</p>
@@ -147,7 +143,7 @@ export default async function AboutPage() {
 
       {/* Team */}
       {team.length > 0 && (
-        <section id="team" className="section-padding bg-white">
+        <section id="team" className="section-padding bg-espresso-900">
           <div className="container-main">
             <div className="text-center mb-16">
               <span className="section-label">Our People</span>

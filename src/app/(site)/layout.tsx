@@ -11,11 +11,11 @@ export const metadata: Metadata = {
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <div className="site-theme">
       <AnnouncementBar />
       <Navbar />
       <main>{children}</main>
       <Footer />
-    </>
+    </div>
   )
 }

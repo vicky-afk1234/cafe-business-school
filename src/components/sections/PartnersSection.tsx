@@ -8,11 +8,11 @@ export function PartnersSection({ partners }: { partners?: Partner[] }) {
   if (items.length === 0) return null
 
   return (
-    <section className="py-16 bg-cream-100 border-y border-coffee-100">
+    <section className="py-16 bg-espresso-900 border-y border-espresso-700">
       <div className="container-main">
         <div className="text-center mb-10">
           <span className="section-label">Our Partners & Accreditations</span>
-          <p className="text-coffee-500 text-sm">Trusted by leading industry organisations worldwide</p>
+          <p className="text-coffee-200 text-sm">Trusted by leading industry organisations worldwide</p>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14">
           {items.map((p) => (

@@ -25,7 +25,7 @@ export default function BannerStrip({ banner }: { banner: Banner }) {
           src={banner.desktopImageUrl}
           alt={banner.title}
           fill
-          className="object-cover hidden sm:block opacity-30"
+          className="object-cover hidden sm:block"
           sizes="100vw"
         />
       )}
@@ -35,12 +35,10 @@ export default function BannerStrip({ banner }: { banner: Banner }) {
           src={banner.mobileImageUrl}
           alt={banner.title}
           fill
-          className="object-cover sm:hidden opacity-30"
+          className="object-cover sm:hidden"
           sizes="768px"
         />
       )}
-      {/* Overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/40" />
 
       <div className="relative z-10 container-main py-16 md:py-20">
         <div className="max-w-2xl" style={{ color: textColor }}>

@@ -75,18 +75,17 @@ export default async function CourseDetailPage({ params }: Props) {
       <section className="relative bg-coffee-950 pt-40 pb-24 overflow-hidden">
         <div className="absolute inset-0">
           {course.bannerMobile && (
-            <Image src={course.bannerMobile} alt={course.title} fill className="object-cover sm:hidden opacity-25" sizes="768px" />
+            <Image src={course.bannerMobile} alt={course.title} fill className="object-cover sm:hidden" sizes="768px" />
           )}
           {(course.bannerDesktop || course.thumbnailDesktop) && (
             <Image
               src={course.bannerDesktop || course.thumbnailDesktop}
               alt={course.title}
               fill
-              className={`object-cover ${course.bannerMobile ? 'hidden sm:block' : ''} opacity-25`}
+              className={`object-cover ${course.bannerMobile ? 'hidden sm:block' : ''}`}
               sizes="100vw"
             />
           )}
-          <div className="absolute inset-0 bg-gradient-to-r from-coffee-950 via-coffee-950/80 to-transparent" />
         </div>
         <div className="container-main relative z-10">
           {/* Breadcrumb */}
@@ -99,7 +98,7 @@ export default async function CourseDetailPage({ params }: Props) {
           </nav>
 
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 bg-espresso-500/20 border border-espresso-400/30 text-espresso-300 text-xs font-semibold tracking-widest uppercase px-4 py-2 rounded-full mb-5">
+            <div className="inline-flex items-center gap-2 bg-espresso-600 border border-espresso-600 text-white text-xs font-semibold tracking-widest uppercase px-4 py-2 rounded-full mb-5">
               {course.category.name}
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
@@ -113,8 +112,8 @@ export default async function CourseDetailPage({ params }: Props) {
                 { icon: Award,  label: course.level.replace(/_/g, ' ') },
                 { icon: Globe,  label: course.language || 'English' },
               ].map(({ icon: Icon, label }) => (
-                <div key={label} className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-white">
-                  <Icon size={14} className="text-espresso-400" />
+                <div key={label} className="flex items-center gap-2 bg-espresso-600 px-4 py-2 rounded-full text-white border border-espresso-400">
+                  <Icon size={14} className="text-espresso-300" />
                   {label}
                 </div>
               ))}
@@ -122,7 +121,7 @@ export default async function CourseDetailPage({ params }: Props) {
 
             <div className="flex gap-4">
               <Link href="/#apply" className="btn-primary">Apply Now ☕</Link>
-              <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white border-2 border-white/30 hover:border-white/60 transition-all text-sm font-semibold">
+              <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white bg-espresso-600 border-2 border-espresso-400 hover:bg-espresso-700 transition-all text-sm font-semibold">
                 Enquire
               </Link>
             </div>
@@ -131,7 +130,7 @@ export default async function CourseDetailPage({ params }: Props) {
       </section>
 
       {/* Main content */}
-      <section className="section-padding bg-cream-100">
+      <section className="section-padding bg-espresso-900">
         <div className="container-main">
           <div className="grid lg:grid-cols-3 gap-12">
             {/* Left */}
@@ -196,7 +195,7 @@ export default async function CourseDetailPage({ params }: Props) {
 
             {/* Sidebar */}
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-2xl border border-coffee-100 shadow-sm p-6 sticky top-32">
+              <div className="bg-espresso-800 rounded-2xl border border-espresso-600 shadow-sm p-6 sticky top-32">
                 <h3 className="font-bold text-coffee-950 mb-5 text-lg" style={{ fontFamily: 'var(--font-playfair)' }}>Programme Details</h3>
                 <dl className="space-y-4 text-sm">
                   {[

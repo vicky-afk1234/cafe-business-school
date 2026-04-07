@@ -23,21 +23,17 @@ export default async function CoursesPage() {
     prisma.heroSection.findFirst({ where: { page: 'courses', isActive: true } }),
   ])
 
-  const heroOverlayColor = hero?.overlayColor || '#0f0d2f'
-  const heroOverlayOpacity = Math.min(Math.max(hero?.overlayOpacity ?? 0.72, 0), 1)
-
   return (
     <>
       {/* Page hero */}
       <section className="relative bg-coffee-950 pt-40 pb-20 overflow-hidden">
         <div className="absolute inset-0">
           {hero?.desktopImageUrl && (
-            <Image src={hero.desktopImageUrl} alt="" fill className="object-cover hidden sm:block opacity-20" sizes="100vw" />
+            <Image src={hero.desktopImageUrl} alt="" fill className="object-cover hidden sm:block" sizes="100vw" />
           )}
           {hero?.mobileImageUrl && (
-            <Image src={hero.mobileImageUrl} alt="" fill className="object-cover sm:hidden opacity-20" sizes="768px" />
+            <Image src={hero.mobileImageUrl} alt="" fill className="object-cover sm:hidden" sizes="768px" />
           )}
-          <div className="absolute inset-0" style={{ backgroundColor: heroOverlayColor, opacity: heroOverlayOpacity }} />
         </div>
         <div className="container-main relative z-10 text-center">
           <span className="section-label text-espresso-300">{hero?.badge || 'Our Programmes'}</span>
@@ -56,14 +52,14 @@ export default async function CoursesPage() {
       </section>
 
       {/* Courses grid */}
-      <section className="section-padding bg-cream-100">
+      <section className="section-padding bg-espresso-900">
         <div className="container-main">
           {courses.length === 0 ? (
             <div className="text-center py-20 text-coffee-400">No courses available at this time.</div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {courses.map(course => (
-                <article key={course.id} className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border border-coffee-100 card-hover">
+                <article key={course.id} className="group bg-espresso-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border border-espresso-600 card-hover">
                   <div className="relative h-56 overflow-hidden bg-coffee-200">
                     {/* Art direction: show portrait on mobile, landscape on desktop */}
                     {course.thumbnailMobile && (
@@ -86,7 +82,7 @@ export default async function CoursesPage() {
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                     <div className="absolute top-4 left-4">
-                      <span className="text-xs font-bold px-3 py-1 rounded-full bg-white/90 text-coffee-800">
+                      <span className="text-xs font-bold px-3 py-1 rounded-full bg-cream-200 text-espresso-900">
                         {levelLabels[course.level] || course.level}
                       </span>
                     </div>

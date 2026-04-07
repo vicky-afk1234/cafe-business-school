@@ -27,8 +27,6 @@ export default async function AdmissionPage() {
     'Start your journey towards a thriving café career. Apply now and join our next intake.'
   const heroBadge = hero?.badge || 'Apply'
   const heroSubheadline = hero?.subheadline
-  const overlayColor = hero?.overlayColor || '#0f0d2f'
-  const overlayOpacity = Math.min(Math.max(hero?.overlayOpacity ?? 0.72, 0), 1)
 
   // Admission section defaults
   const reqTitle = admission?.reqTitle || 'Entry Requirements'
@@ -51,19 +49,17 @@ export default async function AdmissionPage() {
       <section className="relative bg-coffee-950 pt-40 pb-24 overflow-hidden">
         <div className="absolute inset-0">
           {hero?.mobileImageUrl && (
-            <Image src={hero.mobileImageUrl} alt="" fill className="object-cover sm:hidden opacity-20" sizes="768px" />
+            <Image src={hero.mobileImageUrl} alt="" fill className="object-cover sm:hidden" sizes="768px" />
           )}
           {hero?.desktopImageUrl && (
             <Image
               src={hero.desktopImageUrl}
               alt=""
               fill
-              className={`object-cover ${hero?.mobileImageUrl ? 'hidden sm:block' : ''} opacity-20`}
+              className={`object-cover ${hero?.mobileImageUrl ? 'hidden sm:block' : ''}`}
               sizes="100vw"
             />
           )}
-          <div className="absolute inset-0" style={{ backgroundColor: overlayColor, opacity: overlayOpacity }} />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-coffee-950/70" />
         </div>
         <div className="container-main relative z-10 text-center">
           <span className="section-label text-espresso-300">{heroBadge}</span>
@@ -79,7 +75,7 @@ export default async function AdmissionPage() {
 
       {/* Entry Requirements */}
       {requirements.length > 0 && (
-        <section className="section-padding bg-white">
+        <section className="section-padding bg-espresso-900">
           <div className="container-main">
             <div className="text-center mb-16">
               <span className="section-label">Before You Apply</span>
@@ -88,7 +84,7 @@ export default async function AdmissionPage() {
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {requirements.map((req, idx) => (
-                <div key={idx} className="bg-gradient-to-br from-cream-100 to-white p-6 rounded-2xl border border-coffee-100 shadow-sm hover:shadow-lg transition-shadow">
+                <div key={idx} className="bg-gradient-to-br from-espresso-800 to-espresso-700 p-6 rounded-2xl border border-coffee-100 shadow-sm hover:shadow-lg transition-shadow">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 rounded-full bg-espresso-500 text-white flex items-center justify-center shrink-0 font-bold">
                       {idx + 1}
@@ -107,7 +103,7 @@ export default async function AdmissionPage() {
 
       {/* Required Documents */}
       {documents.length > 0 && (
-        <section className="section-padding bg-cream-100">
+        <section className="section-padding bg-espresso-800">
           <div className="container-main">
             <div className="text-center mb-16">
               <span className="section-label">What You Need</span>
@@ -115,7 +111,7 @@ export default async function AdmissionPage() {
             </div>
             <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
               {documents.map((doc, idx) => (
-                <div key={idx} className="flex items-start gap-3 bg-white p-4 rounded-lg border border-coffee-200">
+                <div key={idx} className="flex items-start gap-3 bg-espresso-700 p-4 rounded-lg border border-espresso-500">
                   <FileText className="text-espresso-500 shrink-0 mt-1" size={20} />
                   <div>
                     <p className="font-medium text-coffee-950">{doc}</p>
@@ -129,7 +125,7 @@ export default async function AdmissionPage() {
 
       {/* Application Process */}
       {processSteps.length > 0 && (
-        <section className="section-padding bg-white">
+        <section className="section-padding bg-espresso-900">
           <div className="container-main">
             <div className="text-center mb-16">
               <span className="section-label">Your Journey</span>
@@ -158,7 +154,7 @@ export default async function AdmissionPage() {
 
       {/* FAQs */}
       {faqs.length > 0 && (
-        <section className="section-padding bg-cream-100">
+        <section className="section-padding bg-espresso-800">
           <div className="container-main">
             <div className="text-center mb-16">
               <span className="section-label">Common Questions</span>
@@ -166,7 +162,7 @@ export default async function AdmissionPage() {
             </div>
             <div className="max-w-3xl mx-auto space-y-4">
               {faqs.map((faq, idx) => (
-                <details key={idx} className="bg-white rounded-lg border border-coffee-200 p-6 cursor-pointer hover:border-espresso-400 transition-colors group">
+                <details key={idx} className="bg-espresso-700 rounded-lg border border-espresso-500 p-6 cursor-pointer hover:border-espresso-400 transition-colors group">
                   <summary className="font-semibold text-coffee-950 flex items-center justify-between">
                     {faq.question}
                     <span className="text-espresso-500 group-open:rotate-180 transition-transform">+</span>
@@ -180,7 +176,7 @@ export default async function AdmissionPage() {
       )}
 
       {/* Contact Section */}
-      <section className="section-padding bg-white">
+        <section className="section-padding bg-espresso-900">
         <div className="container-main">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -215,7 +211,7 @@ export default async function AdmissionPage() {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-cream-100 to-white rounded-3xl p-8 border border-coffee-200 shadow-lg">
+            <div className="bg-gradient-to-br from-espresso-800 to-espresso-700 rounded-3xl p-8 border border-coffee-200 shadow-lg">
               <h3 className="text-2xl font-bold text-coffee-950 mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
                 Ready to Apply?
               </h3>

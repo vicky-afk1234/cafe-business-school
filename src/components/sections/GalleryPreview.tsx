@@ -13,7 +13,7 @@ export default function GalleryPreview({ images }: { images?: GalleryItem[] }) {
   if (items.length === 0) return null
 
   return (
-    <section className="section-padding bg-white">
+    <section className="section-padding bg-espresso-900">
       <div className="container-main">
         <div className="flex items-end justify-between mb-12">
           <div>

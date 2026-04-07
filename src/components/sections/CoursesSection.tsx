@@ -25,11 +25,11 @@ const levelLabels: Record<string, string> = {
 }
 
 const levelColors: Record<string, string> = {
-  CERTIFICATE: 'bg-emerald-100 text-emerald-800',
-  DIPLOMA: 'bg-espresso-100 text-espresso-800',
-  ADVANCED_DIPLOMA: 'bg-coffee-100 text-coffee-800',
-  HIGHER_DIPLOMA: 'bg-amber-100 text-amber-800',
-  POSTGRADUATE_DIPLOMA: 'bg-purple-100 text-purple-800',
+  CERTIFICATE: 'bg-espresso-600 text-white',
+  DIPLOMA: 'bg-espresso-500 text-white',
+  ADVANCED_DIPLOMA: 'bg-coffee-700 text-white',
+  HIGHER_DIPLOMA: 'bg-espresso-700 text-white',
+  POSTGRADUATE_DIPLOMA: 'bg-coffee-800 text-white',
 }
 
 export default function CoursesSection({ courses }: { courses?: Course[] }) {
@@ -37,7 +37,7 @@ export default function CoursesSection({ courses }: { courses?: Course[] }) {
   if (items.length === 0) return null
 
   return (
-    <section className="section-padding bg-cream-100">
+    <section className="section-padding bg-espresso-900">
       <div className="container-main">
         {/* Header */}
         <div className="text-center mb-16">
@@ -45,7 +45,7 @@ export default function CoursesSection({ courses }: { courses?: Course[] }) {
           <h2 className="section-title">
             Craft Your <span>Coffee Career</span>
           </h2>
-          <p className="mt-4 text-coffee-600 text-lg max-w-2xl mx-auto">
+          <p className="mt-4 text-coffee-200 text-lg max-w-2xl mx-auto">
             Industry-aligned programmes designed with Singapore's leading café operators.
             From barista fundamentals to full business management.
           </p>
@@ -54,7 +54,7 @@ export default function CoursesSection({ courses }: { courses?: Course[] }) {
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {items.map((course) => (
-            <article key={course.id} className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-400 card-hover border border-coffee-100">
+            <article key={course.id} className="group bg-espresso-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-400 card-hover border border-espresso-600">
               {/* Thumbnail */}
               <div className="relative h-56 overflow-hidden bg-coffee-200">
                 {course.thumbnailDesktop && (
@@ -69,7 +69,7 @@ export default function CoursesSection({ courses }: { courses?: Course[] }) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                 {/* Level badge */}
                 <div className="absolute top-4 left-4">
-                  <span className={`text-xs font-bold px-3 py-1 rounded-full ${levelColors[course.level] || 'bg-gray-100 text-gray-700'}`}>
+                  <span className={`text-xs font-bold px-3 py-1 rounded-full ${levelColors[course.level] || 'bg-espresso-600 text-white'}`}>
                     {levelLabels[course.level] || course.level}
                   </span>
                 </div>
@@ -80,15 +80,15 @@ export default function CoursesSection({ courses }: { courses?: Course[] }) {
                 <div className="text-xs text-espresso-500 font-semibold uppercase tracking-widest mb-2">
                   {course.category.name}
                 </div>
-                <h3 className="text-xl font-bold text-coffee-950 mb-2 group-hover:text-espresso-600 transition-colors" style={{ fontFamily: 'var(--font-playfair)' }}>
+                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-coffee-100 transition-colors" style={{ fontFamily: 'var(--font-playfair)' }}>
                   {course.title}
                 </h3>
                 {course.tagline && (
-                  <p className="text-sm text-coffee-600 leading-relaxed mb-4">{course.tagline}</p>
+                  <p className="text-sm text-coffee-200 leading-relaxed mb-4">{course.tagline}</p>
                 )}
 
                 {/* Meta */}
-                <div className="flex items-center gap-4 text-xs text-coffee-500 mb-5">
+                <div className="flex items-center gap-4 text-xs text-coffee-300 mb-5">
                   <span className="flex items-center gap-1">
                     <Clock size={13} />
                     {course.duration}
@@ -103,7 +103,7 @@ export default function CoursesSection({ courses }: { courses?: Course[] }) {
 
                 <Link
                   href={`/courses/${course.slug}`}
-                  className="flex items-center gap-1.5 text-sm font-semibold text-espresso-600 hover:gap-3 transition-all duration-200 group/link"
+                  className="flex items-center gap-1.5 text-coffee-100 text-sm font-semibold hover:gap-3 transition-all duration-200 group/link"
                 >
                   Learn More
                   <ArrowRight size={15} className="group-hover/link:translate-x-1 transition-transform" />

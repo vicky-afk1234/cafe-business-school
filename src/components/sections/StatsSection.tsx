@@ -5,11 +5,11 @@ export default function StatsSection({ stats }: { stats?: Stat[] }) {
   if (items.length === 0) return null
 
   return (
-    <section id="stats" className="bg-white py-16 relative overflow-hidden text-coffee-900">
+    <section id="stats" className="bg-espresso-900 py-16 relative overflow-hidden text-coffee-100">
       {/* Subtle pattern */}
-      <div className="absolute inset-0 opacity-5"
+      <div className="absolute inset-0 opacity-10"
         style={{
-          backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(125,81,48,0.2) 35px, rgba(125,81,48,0.2) 70px)`,
+          backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(199,210,254,0.28) 35px, rgba(199,210,254,0.28) 70px)`,
         }}
       />
       <div className="container-main relative z-10">
@@ -22,12 +22,12 @@ export default function StatsSection({ stats }: { stats?: Stat[] }) {
                 </div>
               )}
               <div
-                className="text-4xl md:text-5xl font-bold text-coffee-950 mb-2"
+                className="text-4xl md:text-5xl font-bold text-white mb-2"
                 style={{ fontFamily: 'var(--font-playfair)' }}
               >
                 {stat.value}
               </div>
-              <div className="text-sm text-coffee-600 font-medium">{stat.label}</div>
+              <div className="text-sm text-coffee-200 font-medium">{stat.label}</div>
             </div>
           ))}
         </div>
