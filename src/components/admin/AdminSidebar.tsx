@@ -19,6 +19,8 @@ const sections = [
     label: 'Content',
     links: [
       { href: '/admin/hero',     icon: Layers,            label: 'Hero Sections' },
+      { href: '/admin/about',    icon: BookOpen,          label: 'About Page' },
+      { href: '/admin/admission', icon: BookOpen,         label: 'Admission Page' },
       { href: '/admin/banners',  icon: Image,             label: 'Banners' },
       { href: '/admin/announcements', icon: Megaphone,    label: 'Announcements' },
       { href: '/admin/course-categories', icon: Grid3x3, label: 'Categories' },

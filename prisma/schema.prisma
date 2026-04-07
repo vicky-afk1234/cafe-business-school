@@ -406,3 +406,64 @@ enum PartnerType {
   PLACEMENT
   MEDIA
 }
+
+// ─────────────────────────────────────────────────────────────
+// ABOUT PAGE — Dynamic editable content
+// ─────────────────────────────────────────────────────────────
+
+model AboutPage {
+  id              String   @id @default(cuid())
+  // Mission Section
+  missionBadge    String?  @default("Our Mission") @map("mission_badge")
+  missionTitle    String?  @default("Transforming Coffee Passion") @map("mission_title")
+  missionAccent   String?  @default("into Professional Careers") @map("mission_accent")
+  missionBody     String?  @db.Text @map("mission_body")
+  missionImageUrl String? @map("mission_image_url")
+  missionImageAlt String?  @default("GCBS Campus") @map("mission_image_alt")
+  // Highlights (bullets)
+  highlights      Json?    // Array of highlight strings
+  // Values
+  values          Json?    // Array of {icon, title, description}
+  // CTA Section
+  ctaHeading      String?  @default("Ready to Join Our Community?") @map("cta_heading")
+  ctaSubheading   String?  @default("Take the first step towards your café career.") @map("cta_subheading")
+  ctaLabel        String?  @default("Apply Now") @map("cta_label")
+  ctaUrl          String?  @default("/#apply") @map("cta_url")
+  isActive        Boolean  @default(true) @map("is_active")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("about_pages")
+}
+
+// ─────────────────────────────────────────────────────────────
+// ADMISSION PAGE — Dynamic editable content
+// ─────────────────────────────────────────────────────────────
+
+model AdmissionPage {
+  id              String   @id @default(cuid())
+  // Hero Section managed via HeroSection with page='admissions'
+  // Requirements Section
+  reqTitle        String?  @default("Entry Requirements") @map("req_title")
+  reqSubtitle     String?  @db.Text @map("req_subtitle")
+  requirements    Json?    // Array of requirement objects
+  // Process Section
+  processTitle    String?  @default("Application Process") @map("process_title")
+  processSteps    Json? @map("process_steps")   // Array of step objects with title, description
+  // FAQ Section
+  faqTitle        String?  @default("Frequently Asked Questions") @map("faq_title")
+  faqs            Json?    // Array of {question, answer}
+  // Documents Section
+  documents       Json?    // Array of required documents
+  // Contact Info
+  contactEmail    String? @map("contact_email")
+  contactPhone    String? @map("contact_phone")
+  contactHeading  String?  @default("Questions? Get in Touch") @map("contact_heading")
+  contactBody     String?  @db.Text @map("contact_body")
+  // CTA
+  ctaLabel        String?  @default("Start Your Application") @map("cta_label")
+  ctaUrl          String? @map("cta_url")
+  isActive        Boolean  @default(true) @map("is_active")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("admission_pages")
+}

@@ -9,23 +9,50 @@ export const dynamic = 'force-dynamic'
 
 async function getData() {
   try {
-    const [hero, team] = await prisma.$transaction([
-      prisma.heroSection.findUnique({ where: { page: 'about' } }),
+    const [hero, team, about] = await prisma.$transaction([
+      prisma.heroSection.findFirst({ where: { page: 'about', isActive: true } }),
       prisma.teamMember.findMany({ where: { isActive: true }, orderBy: { sortOrder: 'asc' } }),
+      prisma.aboutPage.findFirst(),
     ])
-    return { hero, team }
-  } catch { return { hero: null, team: [] } }
+    return { hero, team, about }
+  } catch { return { hero: null, team: [], about: null } }
 }
 
-const values = [
-  { icon: '🎯', title: 'Excellence', desc: 'We hold ourselves to the highest standards in everything we do — from teaching to customer service.' },
-  { icon: '🤝', title: 'Industry Partnerships', desc: 'Our curriculum is co-developed with top café operators ensuring graduates are job-ready.' },
-  { icon: '💡', title: 'Innovation', desc: 'We continuously update our programmes to reflect the latest trends in specialty coffee and café management.' },
-  { icon: '🌱', title: 'Sustainability', desc: 'We teach ethical sourcing, sustainability practices, and responsible business from day one.' },
-]
-
 export default async function AboutPage() {
-  const { hero, team } = await getData()
+  const { hero, team, about } = await getData()
+  const heroHeadline = hero?.headline || 'About Global Cafe'
+  const heroAccent = hero?.headlineAccent || 'Business School'
+  const heroBody = hero?.bodyText ||
+    'Founded with a mission to elevate cafe culture through world-class education and industry mentorship.'
+  const heroBadge = hero?.badge || 'Our Story'
+  const heroSubheadline = hero?.subheadline
+  const ctaLabel = hero?.ctaPrimary || 'Apply Now'
+  const ctaHref = hero?.ctaPrimaryUrl || '/#apply'
+  const overlayColor = hero?.overlayColor || '#0f0d2f'
+  const overlayOpacity = Math.min(Math.max(hero?.overlayOpacity ?? 0.72, 0), 1)
+
+  // About section defaults
+  const missionBadge = about?.missionBadge || 'Our Mission'
+  const missionTitle = about?.missionTitle || 'Transforming Coffee Passion'
+  const missionAccent = about?.missionAccent || 'into Professional Careers'
+  const missionBody = about?.missionBody || 
+    'Global Café Business School was established to address a critical gap in Singapore\'s F&B education landscape. As café culture boomed, there was a clear need for structured, professional training that went beyond basic barista skills.\n\nOur founders — experienced café operators and hospitality professionals — created a curriculum that combines the science of coffee with practical business management, creating graduates who can thrive in any café environment.\n\nToday, GCBS is recognised as a leading private education institution for café and hospitality management, with graduates working across Singapore, Malaysia, Indonesia, and beyond.'
+  const missionImageUrl = about?.missionImageUrl || 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=900&q=85'
+  const missionImageAlt = about?.missionImageAlt || 'GCBS Campus'
+  const highlights = (about?.highlights as string[] | undefined) || [
+    'EduTrust Certified Private Education Institution',
+    'SCA Approved Training Centre',
+    'Industry Advisory Board with 10+ café leaders',
+    'Job placement support for all graduates'
+  ]
+  const values = (about?.values as Array<{ icon: string; title: string; description: string }> | undefined) || [
+    { icon: '🎯', title: 'Excellence', description: 'We hold ourselves to the highest standards in everything we do — from teaching to customer service.' },
+    { icon: '🤝', title: 'Industry Partnerships', description: 'Our curriculum is co-developed with top café operators ensuring graduates are job-ready.' },
+    { icon: '💡', title: 'Innovation', description: 'We continuously update our programmes to reflect the latest trends in specialty coffee and café management.' },
+    { icon: '🌱', title: 'Sustainability', description: 'We teach ethical sourcing, sustainability practices, and responsible business from day one.' },
+  ]
+  const ctaHeading = about?.ctaHeading || 'Ready to Join Our Community?'
+  const ctaSubheading = about?.ctaSubheading || 'Take the first step towards your café career.'
 
   return (
     <>
@@ -44,15 +71,17 @@ export default async function AboutPage() {
               sizes="100vw"
             />
           )}
-          <div className="absolute inset-0 bg-gradient-to-b from-coffee-950/90 to-coffee-950/60" />
+          <div className="absolute inset-0" style={{ backgroundColor: overlayColor, opacity: overlayOpacity }} />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-coffee-950/70" />
         </div>
         <div className="container-main relative z-10 text-center">
-          <span className="section-label text-espresso-400">Our Story</span>
+          <span className="section-label text-espresso-300">{heroBadge}</span>
           <h1 className="text-5xl md:text-6xl font-bold text-white mt-2 mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
-            About Global Café<br /><span className="text-espresso-400 italic">Business School</span>
+            {heroHeadline}<br /><span className="text-espresso-300 italic">{heroAccent}</span>
           </h1>
+          {heroSubheadline && <p className="text-cream-100 max-w-2xl mx-auto text-xl mb-3">{heroSubheadline}</p>}
           <p className="text-coffee-300 max-w-xl mx-auto text-lg">
-            Founded with a mission to elevate café culture through world-class education and industry mentorship.
+            {heroBody}
           </p>
         </div>
       </section>
@@ -62,24 +91,15 @@ export default async function AboutPage() {
         <div className="container-main">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <span className="section-label">Our Mission</span>
-              <h2 className="section-title mb-6">Transforming Coffee Passion<br />into <span>Professional Careers</span></h2>
+              <span className="section-label">{missionBadge}</span>
+              <h2 className="section-title mb-6">{missionTitle}<br /><span>{missionAccent}</span></h2>
               <div className="space-y-4 text-coffee-700 leading-relaxed">
-                <p>
-                  Global Café Business School was established to address a critical gap in Singapore's F&B education landscape.
-                  As café culture boomed, there was a clear need for structured, professional training that went beyond basic barista skills.
-                </p>
-                <p>
-                  Our founders — experienced café operators and hospitality professionals — created a curriculum that combines
-                  the science of coffee with practical business management, creating graduates who can thrive in any café environment.
-                </p>
-                <p>
-                  Today, GCBS is recognised as a leading private education institution for café and hospitality management,
-                  with graduates working across Singapore, Malaysia, Indonesia, and beyond.
-                </p>
+                {missionBody.split('\n\n').map((para, idx) => (
+                  <p key={idx}>{para}</p>
+                ))}
               </div>
               <ul className="mt-8 space-y-3">
-                {['EduTrust Certified Private Education Institution','SCA Approved Training Centre','Industry Advisory Board with 10+ café leaders','Job placement support for all graduates'].map(h => (
+                {highlights.map(h => (
                   <li key={h} className="flex items-center gap-2.5 text-sm text-coffee-700">
                     <CheckCircle2 size={16} className="text-espresso-500 shrink-0" />
                     {h}
@@ -90,8 +110,8 @@ export default async function AboutPage() {
             <div className="relative">
               <div className="rounded-3xl overflow-hidden h-96 lg:h-[500px] shadow-2xl">
                 <Image
-                  src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=900&q=85"
-                  alt="GCBS Campus"
+                  src={missionImageUrl}
+                  alt={missionImageAlt}
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
@@ -118,7 +138,7 @@ export default async function AboutPage() {
               <div key={v.title} className="bg-white p-6 rounded-2xl border border-coffee-100 shadow-sm hover:shadow-lg transition-shadow">
                 <div className="text-4xl mb-4">{v.icon}</div>
                 <h3 className="font-bold text-coffee-950 mb-2">{v.title}</h3>
-                <p className="text-sm text-coffee-600 leading-relaxed">{v.desc}</p>
+                <p className="text-sm text-coffee-600 leading-relaxed">{v.description}</p>
               </div>
             ))}
           </div>
@@ -165,12 +185,12 @@ export default async function AboutPage() {
       <section className="section-padding bg-coffee-950 relative overflow-hidden">
         <div className="container-main text-center relative z-10">
           <h2 className="text-4xl font-bold text-white mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
-            Ready to Join Our <span className="text-espresso-400 italic">Community?</span>
+            {ctaHeading}
           </h2>
           <p className="text-coffee-300 mb-8 max-w-md mx-auto">
-            Take the first step towards your café career. Applications are open for the next intake.
+            {ctaSubheading}
           </p>
-          <Link href="/#apply" className="btn-primary">Apply Now ☕</Link>
+          <Link href={ctaHref} className="btn-primary">{ctaLabel}</Link>
         </div>
       </section>
     </>

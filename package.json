@@ -11,11 +11,11 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
+    "db:fix-schema": "tsx scripts/fix-about-admission-tables.ts",
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio"
   },
   "dependencies": {
-    "@vercel/blob": "^1.1.1",
     "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "^5.14.0",
     "@radix-ui/react-dialog": "^1.1.1",
@@ -23,6 +23,7 @@
     "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-tabs": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.1",
+    "@vercel/blob": "^1.1.1",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -50,6 +51,7 @@
     "autoprefixer": "^10.0.1",
     "eslint": "^9.0.0",
     "eslint-config-next": "^15.0.0",
+    "pg": "^8.20.0",
     "postcss": "^8",
     "prisma": "^5.14.0",
     "tailwindcss": "^3.4.1",

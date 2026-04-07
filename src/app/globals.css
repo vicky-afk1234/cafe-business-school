@@ -9,11 +9,11 @@
   --font-dm-sans:  'DM Sans', system-ui, sans-serif;
 
   /* Brand tokens */
-  --brand-gold:      #8033CC;
-  --brand-espresso:  #1f0533;
-  --brand-cream:     #f5f3ff;
-  --brand-coffee:    #6b24a8;
-  --brand-light:     #ede8ff;
+  --brand-gold:      #4f46e5;
+  --brand-espresso:  #0f0d2f;
+  --brand-cream:     #eef2ff;
+  --brand-coffee:    #4338ca;
+  --brand-light:     #e0e7ff;
 
   --nav-height: 80px;
 }

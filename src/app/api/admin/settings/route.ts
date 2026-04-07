@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/prisma'
 import { requireAdminSession } from '@/lib/auth'
 
@@ -24,6 +25,12 @@ export async function POST(req: NextRequest) {
         })
       )
     )
+
+    revalidatePath('/', 'layout')
+    revalidatePath('/')
+    revalidatePath('/about')
+    revalidatePath('/courses')
+    revalidatePath('/contact')
 
     return NextResponse.json({ success: true })
   } catch { return NextResponse.json({ error: 'Server error' }, { status: 500 }) }

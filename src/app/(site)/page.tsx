@@ -14,7 +14,7 @@ export const dynamic = 'force-dynamic'
 async function getHomeData() {
   try {
     const [hero, stats, courses, testimonials, partners, banner, gallery] = await prisma.$transaction([
-      prisma.heroSection.findUnique({ where: { page: 'home' } }),
+      prisma.heroSection.findFirst({ where: { page: 'home', isActive: true } }),
       prisma.stat.findMany({ where: { isActive: true }, orderBy: { sortOrder: 'asc' } }),
       prisma.course.findMany({
         where: { isActive: true },

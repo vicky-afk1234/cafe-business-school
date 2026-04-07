@@ -54,7 +54,7 @@ export default function HeroSection({ data }: { data: HeroData }) {
         <div
           className="absolute inset-0"
           style={{
-            background: `linear-gradient(135deg, ${(h.overlayColor || '#1a0d08')}f0 0%, ${(h.overlayColor || '#1a0d08')}a0 60%, ${(h.overlayColor || '#1a0d08')}50 100%)`,
+            background: `linear-gradient(135deg, ${(h.overlayColor || '#0f0d2f')}f0 0%, ${(h.overlayColor || '#0f0d2f')}a0 60%, ${(h.overlayColor || '#0f0d2f')}50 100%)`,
           }}
         />
         {/* Bottom gradient */}

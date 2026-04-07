@@ -20,8 +20,11 @@ export default async function CoursesPage() {
       include: { category: true },
       orderBy: [{ sortOrder: 'asc' }, { title: 'asc' }],
     }),
-    prisma.heroSection.findUnique({ where: { page: 'courses' } }),
+    prisma.heroSection.findFirst({ where: { page: 'courses', isActive: true } }),
   ])
+
+  const heroOverlayColor = hero?.overlayColor || '#0f0d2f'
+  const heroOverlayOpacity = Math.min(Math.max(hero?.overlayOpacity ?? 0.72, 0), 1)
 
   return (
     <>
@@ -34,12 +37,20 @@ export default async function CoursesPage() {
           {hero?.mobileImageUrl && (
             <Image src={hero.mobileImageUrl} alt="" fill className="object-cover sm:hidden opacity-20" sizes="768px" />
           )}
+          <div className="absolute inset-0" style={{ backgroundColor: heroOverlayColor, opacity: heroOverlayOpacity }} />
         </div>
         <div className="container-main relative z-10 text-center">
-          <span className="section-label text-espresso-400">Our Programmes</span>
+          <span className="section-label text-espresso-300">{hero?.badge || 'Our Programmes'}</span>
           <h1 className="text-5xl md:text-6xl font-bold text-white mt-2" style={{ fontFamily: 'var(--font-playfair)' }}>
             {hero?.headline || 'Programmes'}
+            {hero?.headlineAccent && (
+              <>
+                <br />
+                <span className="text-espresso-300 italic">{hero.headlineAccent}</span>
+              </>
+            )}
           </h1>
+          {hero?.subheadline && <p className="text-cream-100 mt-3 max-w-2xl mx-auto">{hero.subheadline}</p>}
           {hero?.bodyText && <p className="text-coffee-300 mt-4 max-w-xl mx-auto">{hero.bodyText}</p>}
         </div>
       </section>

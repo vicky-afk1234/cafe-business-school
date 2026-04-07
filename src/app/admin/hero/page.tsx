@@ -17,7 +17,7 @@ type HeroData = {
 export default function HeroPage() {
   const [heroes, setHeroes] = useState<HeroData[]>([])
   const [selected, setSelected] = useState('home')
-  const [form, setForm] = useState<HeroData>({ page: 'home', overlayOpacity: 0.65, overlayColor: '#1a0d08', isActive: true })
+  const [form, setForm] = useState<HeroData>({ page: 'home', overlayOpacity: 0.65, overlayColor: '#0f0d2f', isActive: true })
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
 
@@ -30,7 +30,7 @@ export default function HeroPage() {
   useEffect(() => {
     const h = heroes.find(h => h.page === selected)
     if (h) setForm(h)
-    else setForm({ page: selected, overlayOpacity: 0.65, overlayColor: '#1a0d08', isActive: true })
+    else setForm({ page: selected, overlayOpacity: 0.65, overlayColor: '#0f0d2f', isActive: true })
   }, [selected, heroes])
 
   const F = (field: keyof HeroData) => (e: any) => setForm(f => ({ ...f, [field]: e.target.value }))
@@ -162,7 +162,7 @@ export default function HeroPage() {
             <div>
               <label className="form-label">Overlay Color</label>
               <div className="flex gap-2">
-                <input type="color" value={form.overlayColor || '#1a0d08'} onChange={F('overlayColor')} className="h-10 w-12 rounded-lg border border-gray-200" />
+                <input type="color" value={form.overlayColor || '#0f0d2f'} onChange={F('overlayColor')} className="h-10 w-12 rounded-lg border border-gray-200" />
                 <input value={form.overlayColor || ''} onChange={F('overlayColor')} className="form-input flex-1" />
               </div>
             </div>

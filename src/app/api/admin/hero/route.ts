@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/prisma'
 import { requireAdminSession } from '@/lib/auth'
 import { validateRequired, handlePrismaError } from '@/lib/validation'
@@ -30,6 +31,11 @@ export async function POST(req: NextRequest) {
       create: data,
       update: data,
     })
+
+    const targetPath = data.page === 'home' ? '/' : `/${data.page}`
+    revalidatePath('/', 'layout')
+    revalidatePath(targetPath)
+
     return NextResponse.json(hero, { status: 201 })
   } catch (err: any) {
     const { status, error, details } = handlePrismaError(err)
